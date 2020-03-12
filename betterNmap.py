@@ -7,9 +7,8 @@ import time
 import sys
 import datetime
 from netifaces import interfaces, ifaddresses, AF_INET
+from terminaltables import AsciiTable
 
-# echo "                ////////// 𝕾𝖆𝖙𝖈𝖔𝖒 //////////"
-# echo " nmap detect vuln and exploit: nmap -Pn --script vuln/exploit <ip>"
 # echo " nmap brute force password : nmap --script brute -Pn <ip>"
 # echo " test if target is vuln to Dos: nmap --script dos -Pn <ip>"
 # echo " perform DOS attack: nmap --max-parallelism 750 -Pn --script http-slowloris ->
@@ -206,6 +205,8 @@ def script_nmap():
                 7.Inspect Heartbleed Vulnerability
                 8.Retrieve IP Information
                 9.Scan DDoS Reflective UDP Services
+                10.Scan taget to find vulns
+                11.Scan taget to exploit vulns
                 00.Exit"""
         ans=raw_input("What would you like to do? ")
         if ans=="1":
@@ -246,12 +247,14 @@ def script_nmap():
             template()
             target = raw_input('Target ip: ')
             os.system("xterm -e 'nmap  –sU –A –PN –n –pU:19,53,161 –script=snmp-sysdescr,dns-recursion,ntp-monlist '"+target+"' && read'")
-        elif ans=="8":
+        elif ans=="10":
             template()
             target = raw_input('Target ip: ')
-            os.system("xterm -e 'nmap --script=banner 192.168.1.1/24 '"+target+"' && read'")
-
-
+            os.system("xterm -e 'nmap nmap -Pn --script vuln '"+target+"' && read'")
+        elif ans=="11":
+            template()
+            target = raw_input('Target ip: ')
+            os.system("xterm -e 'nmap nmap -Pn --script exploit '"+target+"' && read'")
         elif ans=="00":
             ans = None
             print("\n Not Valid Choice Try again")
@@ -263,6 +266,46 @@ def script_nmap():
             time.sleep(0.5)
             invalid()
 
+def hack_the_world():
+    os.system('clear')
+    answ=True
+    while answ:
+        template()
+        print """
+                1.Use Default Safe Scripts
+                2.Use Specific NSE Scripts
+                3.Scan for Common Files/Directories
+                4.Get HTTP Page Titles
+                5.Use Multiple Script Categories
+                6.Use Wildcards for Script Selection
+                7.Inspect Heartbleed Vulnerability
+                8.Retrieve IP Information
+                9.Scan DDoS Reflective UDP Services
+                10.Scan taget to find vulns
+                11.Scan taget to exploit vulns
+                00.Exit"""
+        ans=raw_input("What would you like to do? ")
+        if ans=="1":
+            template()
+            target = raw_input('Target ip: ')
+            os.system("xterm -e 'nmap nmap -Pn --script exploit '"+target+"' && read'")
+        elif ans=="11":
+            template()
+            target = raw_input('Target ip: ')
+            os.system("xterm -e 'nmap nmap -Pn --script exploit '"+target+"' && read'")
+        elif ans=="00":
+            ans = None
+            print("\n Not Valid Choice Try again")
+            time.sleep(0.5)
+            os.system('clear')
+            template()
+        else:
+            os.system('clear')
+            time.sleep(0.5)
+            invalid()
+
+
+    nmap --script dos -Pn
 
 def main():
     template()
